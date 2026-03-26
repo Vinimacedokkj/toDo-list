@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>IA</title>
+	<style>
+		:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;--bg:#f7f7fb;--card:#fff;--accent:#4f46e5;--muted:#6b7280}
+		body{margin:0;background:var(--bg);display:flex;align-items:flex-start;justify-content:center;padding:48px}
+		.card{width:100%;max-width:560px;background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+		h1{margin:0 0 12px;font-size:20px}
+		.input-row{display:flex;gap:8px;margin-bottom:12px}
+		input[type="text"]{flex:1;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px}
+		button{background:var(--accent);color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+		.controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted);font-size:13px}
+		ul{list-style:none;padding:0;margin:0;max-height:360px;overflow:auto}
+		li{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:8px;margin-bottom:8px;border:1px solid #f0f1f5;background:#fcfcfe}
+		.left{display:flex;gap:10px;align-items:center;flex:1}
+		.title{font-size:14px;color:#111}
+		.title.done{opacity:0.5;text-decoration:line-through}
+		.actions{display:flex;gap:8px;align-items:center}
+		.icon-btn{background:transparent;border:0;cursor:pointer;padding:6px;border-radius:6px}
+		.small{font-size:13px;color:var(--muted)}
+		.empty{padding:24px;text-align:center;color:var(--muted)}
+	</style>
+</head>
+<body>
+	<main class="card" role="main">
+		<h1>To‑Do List</h1>
+		<div class="input-row">
+			<input id="taskInput" type="text" placeholder="Adicione uma tarefa e pressione Enter" aria-label="Nova tarefa">
+			<button id="addBtn">Adicionar</button>
+		</div>
+		<div class="controls">
+			<div class="small" id="count">0 tarefas</div>
+			<div>
+				<button class="icon-btn small" id="clearCompleted">Limpar concluídas</button>
+			</div>
+		</div>
+		<ul id="list" aria-live="polite"></ul>
+		<div id="empty" class="empty" hidden>Nenhuma tarefa. Adicione a primeira!</div>
+	</main>
+	<script>
+		const STORAGE_KEY = 'todo_list_v1';
+		const input = document.getElementById('taskInput');
+		const addBtn = document.getElementById('addBtn');
+		const list = document.getElementById('list');
+		const countEl = document.getElementById('count');
+		const empty = document.getElementById('empty');
+		const clearCompleted = document.getElementById('clearCompleted');
+
+		let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+		function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(todos)); render(); }
+
+		function render(){
+			list.innerHTML = '';
+			if(todos.length === 0){ empty.hidden = false; countEl.textContent = '0 tarefas'; return; }
+			empty.hidden = true;
+			todos.forEach((t, i) => {
+				const li = document.createElement('li');
+				const left = document.createElement('div'); left.className = 'left';
+				const chk = document.createElement('input'); chk.type = 'checkbox'; chk.checked = !!t.done;
+				chk.addEventListener('change', () => { todos[i].done = chk.checked; save(); });
+				const title = document.createElement('div'); title.className = 'title' + (t.done ? ' done' : ''); title.textContent = t.text;
+				left.appendChild(chk); left.appendChild(title);
+				const actions = document.createElement('div'); actions.className = 'actions';
+				const del = document.createElement('button'); del.className = 'icon-btn'; del.title = 'Remover';
+				del.textContent = '❌'; del.addEventListener('click', () => { todos.splice(i,1); save(); });
+				actions.appendChild(del);
+				li.appendChild(left); li.appendChild(actions);
+				list.appendChild(li);
+			});
+			const remaining = todos.filter(t=>!t.done).length;
+			countEl.textContent = remaining + (remaining === 1 ? ' tarefa' : ' tarefas') + ' restantes';
+		}
+
+		function addTask(text){
+			const trimmed = (text||'').trim();
+			if(!trimmed) return;
+			todos.unshift({text: trimmed, done:false});
+			save();
+		}
+
+		addBtn.addEventListener('click', () => { addTask(input.value); input.value=''; input.focus(); });
+		input.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ addTask(input.value); input.value=''; } });
+		clearCompleted.addEventListener('click', () => { todos = todos.filter(t=>!t.done); save(); });
+
+		// initial render
+		render();
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toDo List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="div-adicionar-tarefas">
+            <input id="input-texto-da-tarefa" type="text" placeholder="Adicione uma tarefa...">
+            <button onclick="adicionarTarefa()">Adicionar</button>
+        </div>
+        <div class="div-indicador-tarefas-existentes-e-limpar-tarefas">
+            <p><span>0</span> tarefas</p>
+            <p>Limpar concluídas</p>
+        </div>
+        <div class="div-container-contendo-as-tarefas">
+            <p id="nenhuma-tarefa-adicionada-texto">Nenhuma tarefa adicionada. Adicione a primeira!</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
