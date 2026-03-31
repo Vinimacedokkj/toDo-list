@@ -1,5 +1,7 @@
 const listaDeTarefasAdicionadas = [];
 
+const tarefasConcluidas = [];
+
 const adicionarTarefa = () => {
     const input =  document.querySelector("#input-texto-da-tarefa").value;
 
@@ -17,19 +19,37 @@ const adicionarTarefa = () => {
         divContendoAsTarefas.innerHTML = "";
         
         listaDeTarefasAdicionadas.forEach((el) => {
-            const tarefaCriada = document.createElement("li");
-            tarefaCriada.classList.add("tarefa-criada");
-            tarefaCriada.textContent = el;
+            const divDeCadaTarefa = document.createElement("div");
+            divDeCadaTarefa.classList.add("tarefa-criada");
 
-            divContendoAsTarefas.appendChild(tarefaCriada);
+            const checklistDaTarefa = document.createElement("input");
+            checklistDaTarefa.type = "checkbox";
+
+            const textoDaTarefa = document.createElement("p");
+            textoDaTarefa.textContent = el;
+
+            const excluirTarefa = document.createElement("p");
+            excluirTarefa.classList.add("excluir-tarefa");
+            excluirTarefa.textContent = "x";
+
+            divContendoAsTarefas.appendChild(divDeCadaTarefa);
+
+            divDeCadaTarefa.appendChild(checklistDaTarefa);
+            divDeCadaTarefa.appendChild(textoDaTarefa);
+            divDeCadaTarefa.appendChild(excluirTarefa);    
         });
 
         document.querySelector("#input-texto-da-tarefa").value = "";
-        }
+        };
+};
+
+const excluirTarefa = () => {
+    console.log("hello world");
 }
 
-const textoLimparConcluidas = document.querySelector("#limpar-concluidas-texto");
-
-textoLimparConcluidas.addEventListener("click", () => {
-
-});
+const limparConcluidas = () => {
+    const textoLimparConcluidas = document.querySelector("#limpar-concluidas-texto");
+    textoLimparConcluidas.addEventListener("click", () => {
+        console.log("hello world");
+    });
+};
