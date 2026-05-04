@@ -57,7 +57,7 @@ body {
 
 .div-adicionar-tarefas input:focus {
     outline: 1px solid var(--cor-vermelho-soft);
-    box-shadow: 1px 1px 15px 6px var(--cor-vermelho-soft);
+    box-shadow: 1px 1px 5px 2px var(--cor-vermelho-soft);
 }
 
 .div-adicionar-tarefas button {
