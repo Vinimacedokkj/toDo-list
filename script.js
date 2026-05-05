@@ -1,4 +1,4 @@
-const listaDeTarefasAdicionadas = [];
+let listaDeTarefasAdicionadas = [];
 
 const tarefasConcluidas = [];
 
@@ -20,44 +20,48 @@ const adicionarTarefa = () => {
         indicadorTarefasEmTempoReal.innerHTML = listaDeTarefasAdicionadas.length;
         
         const divContendoAsTarefas = document.querySelector(".div-container-contendo-as-tarefas");
-        divContendoAsTarefas.innerHTML = "";
         
-        listaDeTarefasAdicionadas.forEach((tarefa) => {
-            const divDeCadaTarefa = document.createElement("div");
-            divDeCadaTarefa.classList.add("tarefa-criada");
+        const renderizarLista = () => {
+            divContendoAsTarefas.innerHTML = "";
 
-            const checklistDaTarefa = document.createElement("input");
-            checklistDaTarefa.type = "checkbox";
+            listaDeTarefasAdicionadas.forEach(tarefa => {
+                const divDeCadaTarefa = document.createElement("div");
+                divDeCadaTarefa.classList.add("tarefa-criada");
+    
+                const checklistDaTarefa = document.createElement("input");
+                checklistDaTarefa.type = "checkbox";
+    
+                const textoDaTarefa = document.createElement("p");
+                textoDaTarefa.textContent = tarefa.texto;
+    
+                const botaoExcluirTarefa = document.createElement("p");
+                botaoExcluirTarefa.classList.add("excluir-tarefa");
+                botaoExcluirTarefa.textContent = "x";
+    
+                divContendoAsTarefas.appendChild(divDeCadaTarefa);
+    
+                divDeCadaTarefa.appendChild(checklistDaTarefa);
+                divDeCadaTarefa.appendChild(textoDaTarefa);
+                divDeCadaTarefa.appendChild(botaoExcluirTarefa);
 
-            const textoDaTarefa = document.createElement("p");
-            textoDaTarefa.textContent = tarefa.texto;
+                const excluirTarefa = () => {
+                    const idDoBotao = tarefa.id;
+                    
+                    listaDeTarefasAdicionadas = listaDeTarefasAdicionadas.filter(element => element.id !== idDoBotao);
 
-            const botaoExcluirTarefa = document.createElement("p");
-            botaoExcluirTarefa.classList.add("excluir-tarefa");
-            botaoExcluirTarefa.textContent = "x";
+                    listaDeTarefasAdicionadas.forEach(obj => {
+                        return renderizarLista();
+                    })
+                }
 
-            const excluirTarefa = () => {
-                const idDoBotao = tarefa.id;
+                botaoExcluirTarefa.addEventListener("click", excluirTarefa);
+            });
+        };
 
-                const atualizacaoListaDeTarefas = listaDeTarefasAdicionadas.filter(element => element.id !== idDoBotao);
-
-                console.log(atualizacaoListaDeTarefas);
-
-                divContendoAsTarefas.innerHTML = atualizacaoListaDeTarefas;
-
-            }
-
-            botaoExcluirTarefa.addEventListener("click", excluirTarefa);
-
-            divContendoAsTarefas.appendChild(divDeCadaTarefa);
-
-            divDeCadaTarefa.appendChild(checklistDaTarefa);
-            divDeCadaTarefa.appendChild(textoDaTarefa);
-            divDeCadaTarefa.appendChild(botaoExcluirTarefa);   
-        });
+        renderizarLista();
 
         document.querySelector("#input-texto-da-tarefa").value = "";
-        };
+    };
 };
 
 const limparConcluidas = () => {
