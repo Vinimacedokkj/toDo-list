@@ -52,6 +52,14 @@ const adicionarTarefa = () => {
                     listaDeTarefasAdicionadas.forEach(obj => {
                         return renderizarLista();
                     })
+
+                    indicadorTarefasEmTempoReal.innerHTML = listaDeTarefasAdicionadas.length;
+
+                    if (listaDeTarefasAdicionadas.length === 0) {
+                        divContendoAsTarefas.style.justifyContent = "center";
+                        divContendoAsTarefas.style.color = "var(--cor-cinza)";
+                        divContendoAsTarefas.innerHTML = "Nenhuma tarefa adicionada. Adicione a primeira!";
+                    }
                 }
 
                 botaoExcluirTarefa.addEventListener("click", excluirTarefa);
