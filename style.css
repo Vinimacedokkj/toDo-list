@@ -86,6 +86,7 @@ body {
 
 #limpar-concluidas-texto {
     cursor: pointer;
+    user-select: none;
 }
 
 #limpar-concluidas-texto:hover {
@@ -128,6 +129,7 @@ body {
     font-size: 20px;
     color: var(--cor-cinza-soft);
     cursor: pointer;
+    user-select: none;
 }
 
 .excluir-tarefa:hover {
