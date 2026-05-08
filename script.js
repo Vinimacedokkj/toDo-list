@@ -92,7 +92,7 @@ const adicionarTarefa = () => {
             if (filtrarTarefasConcluidas) {
                 console.log("hello world");
                 
-                filtrarTarefasConcluidas.forEach(tarefa => {divContendoAsTarefas.innerHTML = renderizarLista});
+                filtrarTarefasConcluidas.forEach(tarefa => {divContendoAsTarefas.innerHTML = tarefa.texto});
             }
 
         }
