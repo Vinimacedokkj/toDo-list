@@ -41,7 +41,14 @@ const adicionarTarefa = () => {
                 divContendoAsTarefas.appendChild(divDeCadaTarefa);
     
                 divDeCadaTarefa.appendChild(checklistDaTarefa);
-                divDeCadaTarefa.appendChild(textoDaTarefa);
+
+                if (tarefa.concluida) {
+                    console.log("hello world");
+                    divDeCadaTarefa.appendChild(textoDaTarefa);
+                    concluirTarefa();
+                } else {
+                    divDeCadaTarefa.appendChild(textoDaTarefa);
+                }
                 divDeCadaTarefa.appendChild(botaoExcluirTarefa);
 
                 const excluirTarefa = () => {
@@ -64,7 +71,7 @@ const adicionarTarefa = () => {
 
                 botaoExcluirTarefa.addEventListener("click", excluirTarefa);
 
-                let concluirTarefa = () => {
+                const concluirTarefa = () => {
                     if (checklistDaTarefa.checked) {
                         tarefa.concluida = true;
 
@@ -84,21 +91,19 @@ const adicionarTarefa = () => {
 
         const existeTarefaConcluida = listaDeTarefasAdicionadas.some(tarefa => tarefa.concluida === true);
 
-        if (existeTarefaConcluida) {
-            renderizarLista();
+        renderizarLista();
 
-            const filtrarTarefasConcluidas = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === true);
+        // if (existeTarefaConcluida) {
+        //     renderizarLista();
 
-            if (filtrarTarefasConcluidas) {
-                console.log("hello world");
-                
-                filtrarTarefasConcluidas.forEach(tarefa => {divContendoAsTarefas.innerHTML = tarefa.texto});
-            }
+        //     const filtrarTarefasConcluidas = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === true);
 
-        }
-        else {
-            renderizarLista();
-        }
+            
+
+        // }
+        // else {
+        //     renderizarLista();
+        // }
 
         document.querySelector("#input-texto-da-tarefa").value = "";
     };
