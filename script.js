@@ -55,7 +55,7 @@ const adicionarTarefa = () => {
                 
                 checklistDaTarefa.addEventListener("change", concluirTarefa);
     
-                const botaoExcluirTarefa = document.createElement("button");
+                const botaoExcluirTarefa = document.createElement("p");
                 botaoExcluirTarefa.classList.add("excluir-tarefa");
                 botaoExcluirTarefa.textContent = "x";
     
@@ -68,7 +68,7 @@ const adicionarTarefa = () => {
                 const excluirTarefa = () => {
                     const idDoBotao = tarefa.id;
                     
-                    listaDeTarefasAdicionadas = listaDeTarefasAdicionadas.filter(element => element.id !== idDoBotao);
+                    listaDeTarefasAdicionadas = listaDeTarefasAdicionadas.filter(tarefa => tarefa.id !== idDoBotao);
 
                     listaDeTarefasAdicionadas.forEach(obj => renderizarLista());
 
@@ -78,7 +78,7 @@ const adicionarTarefa = () => {
                         divContendoAsTarefas.innerHTML = "Nenhuma tarefa adicionada. Adicione a primeira!";
                     }
 
-                    filtrarTarefasPendentes = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === false);
+                    filtrarTarefasPendentes = listaDeTarefasAdicionadas.filter(tarefa => !tarefa.concluida);
                     indicadorTarefasEmTempoReal.innerHTML = filtrarTarefasPendentes.length;
                     
                 }
@@ -91,6 +91,21 @@ const adicionarTarefa = () => {
                     textoDaTarefa.style.color = "var(--cor-cinza-soft)";
                 }
             });
+
+            const limparConcluidas = () => {
+                const existeTarefaConcluida = listaDeTarefasAdicionadas.some(tarefa => tarefa.concluida);
+
+                if (existeTarefaConcluida) {
+                    listaDeTarefasAdicionadas = listaDeTarefasAdicionadas.filter(tarefa => !tarefa.concluida);
+            
+                    console.log(listaDeTarefasAdicionadas);
+                } else {
+                    console.log("Hello world");
+                }
+            }
+        
+            const limparConcluidasTexto = document.querySelector("#limpar-concluidas-texto");
+            limparConcluidasTexto.addEventListener("click", limparConcluidas);
         }
 
         renderizarLista();
