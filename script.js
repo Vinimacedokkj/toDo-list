@@ -16,8 +16,10 @@ const adicionarTarefa = () => {
             concluida: false
         });
 
+        let filtrarTarefasPendentes = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === false);
+
         const indicadorTarefasEmTempoReal = document.querySelector(".numero-de-tarefas-em-tempo-real");
-        indicadorTarefasEmTempoReal.innerHTML = listaDeTarefasAdicionadas.length;
+        indicadorTarefasEmTempoReal.innerHTML = filtrarTarefasPendentes.length;
         
         const divContendoAsTarefas = document.querySelector(".div-container-contendo-as-tarefas");
         
@@ -46,11 +48,14 @@ const adicionarTarefa = () => {
                         textoDaTarefa.style.textDecoration = "none";
                         textoDaTarefa.style.color = "black";
                     }
+
+                    filtrarTarefasPendentes = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === false);
+                    indicadorTarefasEmTempoReal.innerHTML = filtrarTarefasPendentes.length;
                 }
                 
                 checklistDaTarefa.addEventListener("change", concluirTarefa);
     
-                const botaoExcluirTarefa = document.createElement("p");
+                const botaoExcluirTarefa = document.createElement("button");
                 botaoExcluirTarefa.classList.add("excluir-tarefa");
                 botaoExcluirTarefa.textContent = "x";
     
@@ -67,13 +72,15 @@ const adicionarTarefa = () => {
 
                     listaDeTarefasAdicionadas.forEach(obj => renderizarLista());
 
-                    indicadorTarefasEmTempoReal.innerHTML = listaDeTarefasAdicionadas.length;
-
                     if (listaDeTarefasAdicionadas.length === 0) {
                         divContendoAsTarefas.style.justifyContent = "center";
                         divContendoAsTarefas.style.color = "var(--cor-cinza)";
                         divContendoAsTarefas.innerHTML = "Nenhuma tarefa adicionada. Adicione a primeira!";
                     }
+
+                    filtrarTarefasPendentes = listaDeTarefasAdicionadas.filter(tarefa => tarefa.concluida === false);
+                    indicadorTarefasEmTempoReal.innerHTML = filtrarTarefasPendentes.length;
+                    
                 }
 
                 botaoExcluirTarefa.addEventListener("click", excluirTarefa);
@@ -82,7 +89,7 @@ const adicionarTarefa = () => {
                     checklistDaTarefa.checked = "true";
                     textoDaTarefa.style.textDecoration = "line-through";
                     textoDaTarefa.style.color = "var(--cor-cinza-soft)";
-                } 
+                }
             });
         }
 

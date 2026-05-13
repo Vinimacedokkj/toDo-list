@@ -130,6 +130,7 @@ body {
     color: var(--cor-cinza-soft);
     cursor: pointer;
     user-select: none;
+    border: none;
 }
 
 .excluir-tarefa:hover {
